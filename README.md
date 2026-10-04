@@ -51,11 +51,8 @@ cd portable-toolchain-pack
 
 1. 列出 open issue（`gh issue list -R entropy356/dsh-pet-indesktop-rs` 或
    `GET /repos/entropy356/dsh-pet-indesktop-rs/issues?state=open`），通读标题、正文和已有评论。
-2. 选一个没被认领的 issue（无 assignee、近期评论区无「认领」声明）。
-3. **先认领再动手**：在 issue 下评论声明（如「认领」，说明计划），最好同时
-   指派自己（`PATCH …/issues/N`，`assignees: ["entropy356"]`）。发现已被认领就换下一个，
-   不要抢。
-4. 开分支（如 `feat/xxx`、`fix/xxx`），提交信息引用编号（`… (#5)`）。
-5. 完成、验证通过后推送；commit 或 PR 里用 `closes #N` 等关键字自动关闭 issue，
+2. 选定后**先评论再开工**：在 issue 下评论「认领」并简述计划，然后才开始动手。
+3. 开分支（如 `feat/xxx`、`fix/xxx`），提交信息引用编号（`… (#5)`）。
+4. 完成、验证通过后推送；commit 或 PR 里用 `closes #N` 等关键字自动关闭 issue，
    或完成后在 issue 下留言收尾。
-6. 每做一步有进展可以回到 issue 下更新，别让 issue 长期无动静。
+5. 有进展回到 issue 下更新，别让 issue 长期无动静。
