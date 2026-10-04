@@ -42,7 +42,20 @@ cd portable-toolchain-pack
 ## 工作流程
 
 1. 按「环境搭建」装好工具链。
-2. clone `dsh-pet-indesktop-rs`，从它的 README 和 issues 了解项目、领任务。
+2. clone `dsh-pet-indesktop-rs`，从它的 README 和 issues 了解项目、领任务（见下节）。
 3. 开工：改动 → commit → push（写操作需 PAT）。
 4. 需要交接敏感文件时用本仓库的 age 加解密（私钥规则见上）。
 5. 信息不够就问用户，不要编造。
+
+## 领取 issue
+
+1. 列出 open issue（`gh issue list -R entropy356/dsh-pet-indesktop-rs` 或
+   `GET /repos/entropy356/dsh-pet-indesktop-rs/issues?state=open`），通读标题、正文和已有评论。
+2. 选一个没被认领的 issue（无 assignee、近期评论区无「认领」声明）。
+3. **先认领再动手**：在 issue 下评论声明（如「认领」，说明计划），最好同时
+   指派自己（`PATCH …/issues/N`，`assignees: ["entropy356"]`）。发现已被认领就换下一个，
+   不要抢。
+4. 开分支（如 `feat/xxx`、`fix/xxx`），提交信息引用编号（`… (#5)`）。
+5. 完成、验证通过后推送；commit 或 PR 里用 `closes #N` 等关键字自动关闭 issue，
+   或完成后在 issue 下留言收尾。
+6. 每做一步有进展可以回到 issue 下更新，别让 issue 长期无动静。
