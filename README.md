@@ -8,7 +8,7 @@ Agent / Planner 开工引导仓库 + age 1.2.1 便携包。
 | 角色 | 入口文档 | 内容 |
 |---|---|---|
 | 执行端 agent | [agent/README.md](agent/README.md) | 认证方式、工作流程、领取 issue、工具链链接 |
-| planner | [planner/README.md](planner/README.md) | 装 age → 解密 pat.enc 拿 PAT → 进入 planning-center |
+| planner | [planner/README.md](planner/README.md) | 装 age → 领取 PAT（agent 发公钥、用户加密，私钥不传输）→ 进入 planning-center |
 
 ## 文件位置
 

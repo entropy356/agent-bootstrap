@@ -13,18 +13,31 @@ export PATH="$HOME/toolchain/usr/bin:$PATH"
 平台：x86_64 Linux（glibc）。`install.sh` 会先按
 [`SHA256SUMS`](../SHA256SUMS) 校验再解压，校验失败直接退出。
 
-## 2. 解密 pat.enc 拿 PAT
+## 2. 拿 PAT（age 公钥流程）
 
-用户会私下提供 `pat.enc`（age 加密的 PAT）与 age 私钥。解密：
+流程固定为：**agent 发公钥 → 用户加密 → 私钥不传输**。
 
-```bash
-age -d -i <私钥文件> pat.enc
-```
+1. 生成密钥对（私钥只留在本机，不发给任何人）：
+
+   ```bash
+   age-keygen -o key.txt   # key.txt 内含私钥与公钥注释行
+   ```
+
+2. 把其中的**公钥**（`age1…` 那行）发给用户，等用户用该公钥加密 PAT
+   得到 `pat.enc` 发回。
+3. 用本地私钥解密（私钥只以文件路径使用，禁止 cat、粘贴、上传）：
+
+   ```bash
+   age -d -i key.txt pat.enc
+   ```
 
 安全规则（必须遵守）：
 
-- **令牌与 age 私钥都不要回显**：不出现在终端输出、日志、echo、代码、提交信息或任何仓库文件里，只引用环境变量名（如 `export GH_TOKEN=$(age -d -i key.txt pat.enc)`）。
-- age 私钥只以文件路径使用（`age -d -i <keyfile>`），禁止 cat、粘贴、上传。
+- **私钥永不传输**：私钥只在持有它的 agent 工作区里，不出现在对话、
+  终端输出、日志、代码、提交信息或任何仓库文件里；需要新密钥时重新
+  生成密钥对并走一遍上述流程，不要把旧私钥发出去。
+- **令牌不要回显**：不出现在终端输出、日志、echo、代码、提交信息或任
+  何仓库文件里，只引用环境变量名（如 `export GH_TOKEN=$(age -d -i key.txt pat.enc)`）。
 - 权限不够、拿不到令牌就直接问用户，不要猜。
 
 ## 3. 进入 planning-center 接续工作
