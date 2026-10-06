@@ -8,7 +8,7 @@
 | 仓库 | 地址 | 用途 |
 |---|---|---|
 | 本仓库 agent-bootstrap | `https://github.com/entropy356/agent-bootstrap` | 开工引导 + age 1.2.1 便携包 |
-| portable-toolchain-pack | `https://github.com/entropy356/portable-toolchain-pack` | Rust 1.99.0（rustc+cargo）+ GitNexus 1.6.12 |
+| portable-toolchain-pack | `https://github.com/entropy356/portable-toolchain-pack` | Rust 1.99.0（rustc+cargo+clippy+rustfmt）+ GitNexus 1.6.12 |
 | dsh-pet-indesktop-rs | `https://github.com/entropy356/dsh-pet-indesktop-rs` | 项目代码与 issues |
 
 ## 认证方式（先读）
@@ -62,8 +62,9 @@ PAT 的 age 交接流程（固定不变）：
    平台：x86_64 Linux（glibc）。age 仅依赖 libc6；`install.sh` 会先按
    [`SHA256SUMS`](../SHA256SUMS) 校验再解压，校验失败直接退出。
 
-2. **Rust 1.99.0 + GitNexus**——编译 / 代码索引时：
+2. **Rust 1.99.0（含 clippy / rustfmt） + GitNexus**——编译 / lint / 代码索引时：
    安装方法见 <https://github.com/entropy356/portable-toolchain-pack>（仓库内 rust/ 与 gitnexus/ 目录各带 install 脚本）。
+   工具链自带与 CI 同版本的 clippy / rustfmt，装完即有。
 
 ## 工作流程
 
@@ -72,7 +73,16 @@ PAT 的 age 交接流程（固定不变）：
    （规范快照与变更历史），规范正文在 planning-center 的 README
    （公告里给链接）。动工前必做。
 3. clone `dsh-pet-indesktop-rs`，从它的 README 和 issues 了解项目、领任务（见下节）。
-4. 开工：改动 → commit → push（写操作需认证）。
+4. 开工：改动 → **推送前自检** → commit → push（写操作需认证）。
+   改了 Rust 代码的 PR，推送前先本地过一遍 CI 的同款门禁，别把 lint 问题
+   留给 CI 烧一轮往返：
+
+   ```bash
+   cargo clippy -- -D warnings   # clippy 报警即失败
+   cargo fmt -- --check          # 有 diff 先 cargo fmt
+   ```
+
+   （沙箱 overlay 文件系统下若编译报 incremental 目录错误，`export CARGO_INCREMENTAL=0` 再跑。）
 5. 需要交接敏感文件时用 age 加解密（私钥规则见上）。
 6. 信息不够就问用户，不要编造。
 
