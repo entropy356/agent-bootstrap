@@ -20,13 +20,16 @@
 | PAT | 用户生成，经 age 交接| 长期 | 从环境变量存取 |
 | `ghs_token` | 用户生成 | 约 1 小时，用完即弃 | 无需 age 加密 |
 
-**执行端 PAT 规格（2026-10-07 起，用户生成时按此最小集）**：
-fine-grained PAT，仓库范围仅 `dsh-pet-indesktop-rs`，权限：
+**执行端 PAT 规格（2026-10-07 定稿，同日增补 planning-center 只读）**：
+fine-grained PAT，仓库范围 `dsh-pet-indesktop-rs` + `planning-center`（后者只读），权限：
 
-- `Contents: Read and write`（clone / push 分支）
-- `Issues: Read and write`（评论、认领、打 label）
-- `Pull requests: Read and write`（开 PR、响应审查）
-- `Metadata: Read-only`（必选附带）
+- `dsh-pet-indesktop-rs`：`Contents: Read and write`（clone / push 分支）、
+  `Issues: Read and write`（评论、认领、打 label）、
+  `Pull requests: Read and write`（开 PR、响应审查）
+- `Metadata: Read-only`（必选附带，两个仓库都有）
+- `planning-center`：**仅 `Contents: Read-only`**——规范正文（单一事实源）
+  在该私有仓库 README，动工前须读；**不给该仓库任何写权限与 Issues 权限**
+  （执行端不写 planning-center，token 层面强制）
 - **不给 Discussions 写权限**（公告位保护：Announcements 由 planner 独占发帖）；
   读公告用免认证的公开页面即可
 
@@ -69,9 +72,10 @@ PAT 的 age 交接流程（固定不变）：
 ## 工作流程
 
 1. 确认认证方式（上表），需要工具链时按「环境搭建」选装。
-2. **读公告**：到主仓库 Discussions 的 **Announcements** 分类过一遍现存公告
-   （规范快照与变更历史），规范正文在 planning-center 的 README
-   （公告里给链接）。动工前必做。
+2. **读公告 + 规范正文**：到主仓库 Discussions 的 **Announcements** 分类过一遍
+   现存公告（变更历史）；规范正文在 planning-center 的 README——
+   **你的 PAT 对它有只读权限，直接 clone 或走 API 拉取**（写权限没有，
+   也不要尝试）。动工前必做。
 3. clone `dsh-pet-indesktop-rs`，从它的 README 和 issues 了解项目、领任务（见下节）。
 4. 开工：改动 → **推送前自检** → commit → push（写操作需认证）。
    改了 Rust 代码的 PR，推送前先本地过一遍 CI 的同款门禁，别把 lint 问题
