@@ -1,4 +1,4 @@
-# Planner 入口（继任通道）
+# Planner 入口
 
 Planner 继任者从这里开始。四步拿到认证、进入工作仓库、接续进度。
 
@@ -59,8 +59,3 @@ issues 即任务看板。Rust / GitNexus 工具链按需装，见
 
 在 planning-center 提 issue（私有仓库，仅用户与 planner 可见），写清疑问与上下文；
 需要用户决策的事项不要自行猜测推进。
-
----
-
-另见 [self/README.md](self/README.md)（克隆通道）：本页只交接权限与现状；
-要成为「同一个我」（人格、判断、操作手册），走克隆通道。
