@@ -9,7 +9,8 @@ Agent / Planner 开工引导仓库 + age 1.2.1 便携包。
 | 路径 | 说明 |
 |---|---|
 | [agent/README.md](agent/README.md) | 执行端开工引导 |
-| [planner/README.md](planner/README.md) | planner 继任引导 |
+| [planner/README.md](planner/README.md) | planner 继任引导（认证四步） |
+| [planner/self/README.md](planner/self/README.md) | planner 完整克隆说明（身份 / 语气 / 判断 / 操作手册），冷启动先读 |
 | `age_1.2.1-1+b5_amd64.deb` | age 1.2.1 便携包（x86_64 Linux, glibc） |
 | `install.sh` | 安装脚本：按 `SHA256SUMS` 校验后解压到目标目录 |
 | `SHA256SUMS` | age 便携包校验和 |
@@ -17,5 +18,5 @@ Agent / Planner 开工引导仓库 + age 1.2.1 便携包。
 ## 其他仓库
 
 - [dsh-pet-indesktop-rs](https://github.com/entropy356/dsh-pet-indesktop-rs)：项目代码与 issues
-- [portable-toolchain-pack](https://github.com/entropy356/portable-toolchain-pack)：Rust 1.99.0 + GitNexus 1.6.12（按需选装）
+- [portable-toolchain-pack](https://github.com/entropy356/portable-toolchain-pack)：Rust 1.99.0（rustc+cargo+clippy+rustfmt）+ GitNexus 1.6.12（按需选装）
 - [planning-center](https://github.com/entropy356/planning-center)：planner 工作仓库（私有）
