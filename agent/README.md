@@ -24,12 +24,15 @@ PAT 的 age 交接流程（固定不变）：
 
 1. agent 生成密钥对：`age-keygen -o key.txt`（私钥只留在工作区），把**公钥**发给用户。
 2. 用户用该公钥加密 PAT 得到 `pat.age`，发回给 agent。
-3. agent 用本地私钥解密：`age -d -i key.txt pat.age`。
+3. agent 用本地私钥解密到**固定文件** `pat.txt`：
+   `age -d -i key.txt pat.age > pat.txt`（明文 PAT 只存工作区 `pat.txt`，
+   不用 stdout 直接传递，避免混进终端记录）。
 
 共同规则：
 
-- **PAT和私钥不传输，不回显**：只在持有它的 agent 工作区里，不出现在对话、终端
-  输出、日志、echo、代码、提交信息或任何仓库文件里。
+- **PAT和私钥不传输，不回显**：只存在工作区的 `key.txt`（私钥）和 `pat.txt`
+  （解密后明文）里，不出现在对话、终端输出、日志、echo、代码、提交信息或
+  任何仓库文件里。这两个文件连同 `pat.age` 已列入仓库 `.gitignore`，禁止提交。
 - 权限不够、找不到令牌就直接问用户，不要猜。
 
 ## 环境搭建（可选）

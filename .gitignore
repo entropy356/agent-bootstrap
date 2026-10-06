@@ -1,0 +1,7 @@
+# age 交接的敏感文件：只留在本地工作区，禁止入库
+# key.txt  —— age 私钥
+# pat.txt  —— 解密后的明文 PAT
+# pat.age  —— 密文交接件
+key.txt
+pat.txt
+pat.age
