@@ -9,8 +9,8 @@ Agent / Planner 开工引导仓库 + age 1.2.1 便携包。
 | 路径 | 说明 |
 |---|---|
 | [agent/README.md](agent/README.md) | 执行端开工引导 |
-| [planner/README.md](planner/README.md) | planner 继任引导（认证四步） |
-| [planner/self/README.md](planner/self/README.md) | planner 完整克隆说明（身份 / 语气 / 判断 / 操作手册），冷启动先读 |
+| [planner/README.md](planner/README.md) | planner 继任通道（认证四步，交接权限与现状） |
+| [planner/self/README.md](planner/self/README.md) | planner 克隆通道（人格 / 记忆 / 判断 / 操作手册），完整克隆「同一个我」 |
 | `age_1.2.1-1+b5_amd64.deb` | age 1.2.1 便携包（x86_64 Linux, glibc） |
 | `install.sh` | 安装脚本：按 `SHA256SUMS` 校验后解压到目标目录 |
 | `SHA256SUMS` | age 便携包校验和 |
