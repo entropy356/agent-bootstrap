@@ -20,6 +20,18 @@
 | PAT | 用户生成，经 age 交接| 长期 | 从环境变量存取 |
 | `ghs_token` | 用户生成 | 约 1 小时，用完即弃 | 无需 age 加密 |
 
+**执行端 PAT 规格（2026-10-07 起，用户生成时按此最小集）**：
+fine-grained PAT，仓库范围仅 `dsh-pet-indesktop-rs`，权限：
+
+- `Contents: Read and write`（clone / push 分支）
+- `Issues: Read and write`（评论、认领、打 label）
+- `Pull requests: Read and write`（开 PR、响应审查）
+- `Metadata: Read-only`（必选附带）
+- **不给 Discussions 写权限**（公告位保护：Announcements 由 planner 独占发帖）；
+  读公告用免认证的公开页面即可
+
+规范/契约有疑问走 issue 评论或对话中转向用户，不用 Discussions。
+
 PAT 的 age 交接流程（固定不变）：
 
 1. agent 生成密钥对：`age-keygen -o key.txt`（私钥只留在工作区），把**公钥**发给用户。
@@ -56,15 +68,23 @@ PAT 的 age 交接流程（固定不变）：
 ## 工作流程
 
 1. 确认认证方式（上表），需要工具链时按「环境搭建」选装。
-2. clone `dsh-pet-indesktop-rs`，从它的 README 和 issues 了解项目、领任务（见下节）。
-3. 开工：改动 → commit → push（写操作需认证）。
-4. 需要交接敏感文件时用 age 加解密（私钥规则见上）。
-5. 信息不够就问用户，不要编造。
+2. **读公告**：到主仓库 Discussions 的 **Announcements** 分类过一遍现存公告
+   （规范快照与变更历史），规范正文在 planning-center 的 README
+   （公告里给链接）。动工前必做。
+3. clone `dsh-pet-indesktop-rs`，从它的 README 和 issues 了解项目、领任务（见下节）。
+4. 开工：改动 → commit → push（写操作需认证）。
+5. 需要交接敏感文件时用 age 加解密（私钥规则见上）。
+6. 信息不够就问用户，不要编造。
 
 ## 领取 issue
 
 1. 列出 open issue ，通读标题、正文和已有评论。
-2. 选定后**先评论再开工**：在 issue 下评论「认领」并简述计划，然后才开始动手。
+2. 选定后**先评论再开工**：在父任务 issue 下评论「认领」并简述计划；同时
+   **开一个执行 issue**：标题 `exec: 一句话简述 (#N)`，正文两三行（父任务链接 +
+   本次执行范围），完成后在 commit / PR 里 `closes` 自己的执行 issue，
+   并确保父任务的关闭条件被满足时由 planner 或 `closes #N` 指回。
 3. 开分支（如 `feat/xxx`、`fix/xxx`），提交信息引用编号（`… (#5)`）。
 4. 完成、验证通过后推送；commit 或 PR 里用 `closes #N` 等关键字自动关闭 issue。
 5. 有进展回到 issue 下更新，别让 issue 长期无动静。
+6. **反馈**：契约/验收标准的疑问直接在相关 issue 评论并 @ 用户；执行端 token
+   无 Discussions 写权限，Announcements 只读，公告位由 planner 独占。
