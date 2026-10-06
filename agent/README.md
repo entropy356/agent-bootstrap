@@ -17,22 +17,19 @@
 
 | 方式 | 获取 | 有效期 | 使用方式 |
 |---|---|---|---|
-| PAT | 用户生成（fine-grained，最小权限），经 age 交接（流程见下） | 长期 | 从环境变量或凭据管理器读取 |
+| PAT | 用户生成，经 age 交接| 长期 | 从环境变量存取 |
 | `ghs_token` | 用户生成 | 约 1 小时，用完即弃 | 无需 age 加密 |
 
-PAT 的 age 交接流程（固定不变）：**agent 发公钥 → 用户加密 → 私钥不传输**。
+PAT 的 age 交接流程（固定不变）：
 
-1. agent 生成密钥对：`age-keygen -o key.txt`（私钥只留在 agent 工作区）。
-2. agent 把**公钥**（`age1…` 行）发给用户。
-3. 用户用该公钥加密 PAT 得到 `pat.enc`，发回给 agent。
-4. agent 用本地私钥解密：`age -d -i key.txt pat.enc`。
+1. agent 生成密钥对：`age-keygen -o key.txt`（私钥只留在工作区），把**公钥**发给用户。
+2. 用户用该公钥加密 PAT 得到 `pat.age`，发回给 agent。
+3. agent 用本地私钥解密：`age -d -i key.txt pat.age`。
 
 共同规则：
 
-- **age 私钥永不传输**：只在持有它的 agent 工作区里，不出现在对话、终端
-  输出、日志、echo、代码、提交信息或任何仓库文件里；需要新密钥时重新生
-  成密钥对走上述流程，不外发旧私钥。
-- **令牌不要回显**：不出现在终端输出、日志、echo、代码、提交信息或任何仓库文件里，只引用环境变量名。
+- **PAT和私钥不传输，不回显**：只在持有它的 agent 工作区里，不出现在对话、终端
+  输出、日志、echo、代码、提交信息或任何仓库文件里。
 - 权限不够、找不到令牌就直接问用户，不要猜。
 
 ## 环境搭建（可选）
@@ -63,10 +60,8 @@ PAT 的 age 交接流程（固定不变）：**agent 发公钥 → 用户加密 
 
 ## 领取 issue
 
-1. 列出 open issue（`gh issue list -R entropy356/dsh-pet-indesktop-rs` 或
-   `GET /repos/entropy356/dsh-pet-indesktop-rs/issues?state=open`），通读标题、正文和已有评论。
+1. 列出 open issue ，通读标题、正文和已有评论。
 2. 选定后**先评论再开工**：在 issue 下评论「认领」并简述计划，然后才开始动手。
 3. 开分支（如 `feat/xxx`、`fix/xxx`），提交信息引用编号（`… (#5)`）。
-4. 完成、验证通过后推送；commit 或 PR 里用 `closes #N` 等关键字自动关闭 issue，
-   或完成后在 issue 下留言收尾。
+4. 完成、验证通过后推送；commit 或 PR 里用 `closes #N` 等关键字自动关闭 issue。
 5. 有进展回到 issue 下更新，别让 issue 长期无动静。
