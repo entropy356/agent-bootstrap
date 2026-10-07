@@ -27,8 +27,8 @@ fine-grained PAT，仓库范围仅 `dsh-pet-indesktop-rs`，权限：
 - `Issues: Read and write`（评论、认领、打 label）
 - `Pull requests: Read and write`（开 PR、响应审查）
 - `Metadata: Read-only`（必选附带）
-- **不给 Discussions 写权限**（公告位保护：Announcements 由 planner 独占发帖）；
-  读公告用免认证的公开页面即可
+- **不给 Discussions 写权限**（公共广播面收敛：执行端不参与主仓库
+  Discussions 任何分类，一切反馈走 issue 评论）
 - 不需要任何其他仓库的权限：规范正文在主仓库 `SPEC.md`（公开），
   planning-center 是 planner 私有工作仓库，执行端无权限也无需访问
 
@@ -71,10 +71,9 @@ PAT 的 age 交接流程（固定不变）：
 ## 工作流程
 
 1. 确认认证方式（上表），需要工具链时按「环境搭建」选装。
-2. **读规范正文 + 瞄一眼应急位**：规范正文是主仓库根目录的 **`SPEC.md`**
-   （公开、clone 主仓库即得、单一事实源，动工前必读并确认最新版）；
-   顺带看一眼主仓库 Discussions 的 **Announcements** 是否有应急公告——
-   **正常状态下为空**（该位只用于临时应急广播，planner 独占）。
+2. **读规范正文**：主仓库根目录的 **`SPEC.md`**（公开，clone 主仓库即得，
+   单一事实源）——动工前必读并确认是最新版（变更历史 = 该文件的 git
+   提交记录）。
 3. clone `dsh-pet-indesktop-rs`，从它的 README 和 issues 了解项目、领任务（见下节）。
 4. 开工：改动 → **推送前自检** → commit → push（写操作需认证）。
    改了 Rust 代码的 PR，推送前先本地过一遍 CI 的同款门禁，别把 lint 问题
@@ -100,4 +99,4 @@ PAT 的 age 交接流程（固定不变）：
 4. 完成、验证通过后推送；commit 或 PR 里用 `closes #N` 等关键字自动关闭 issue。
 5. 有进展回到 issue 下更新，别让 issue 长期无动静。
 6. **反馈**：契约/验收标准的疑问直接在相关 issue 评论并 @ 用户；执行端 token
-   无 Discussions 写权限，Announcements 只读，公告位由 planner 独占。
+   无 Discussions 写权限（公共广播面收敛），一切反馈走 issue 评论。
